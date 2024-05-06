@@ -21,31 +21,28 @@ Node* createNode(int);
 void insertEnd(Node**, int);
 void displayList(Node*);
 void swapNodes(Node*, Node*);
-void bubbleSort(Node*);
+void selectionSort(Node*);
 
 int main() {
-    Node* head = nullptr;
+    int arriNumbers1[] = {42, 7, 0, 3, 666, 1, 111, 10, 13};
+    int iArraySize = 9;
     
-    insertEnd(&head, 42);
-    insertEnd(&head, 7);
-    insertEnd(&head, 0);
-    insertEnd(&head, 3);
-    insertEnd(&head, 666);
-    insertEnd(&head, 1);
-    insertEnd(&head, 111);
-    insertEnd(&head, 10);
-    insertEnd(&head, 13);
+    Node* head = nullptr;
+    for (int i = 0; i < iArraySize; ++i) 
+    {
+        insertEnd(&head, arriNumbers1[i]);
+    }
 
     cout << "Lista original: ";
     displayList(head);
 
     auto timeStart = high_resolution_clock::now();
-    bubbleSort(head);
+    selectionSort(head);
     auto timeStop = high_resolution_clock::now();
 
     cout << "Lista ordenada: ";
     displayList(head);
-    
+
     auto timeDuration = duration_cast<nanoseconds>(timeStop - timeStart);
     cout << "Tempo utilizado: " << timeDuration.count() << " nanosegundos." << endl;
 
@@ -91,6 +88,7 @@ void displayList(Node* node)
         return;
     }
 
+    cout << "Payload: ";
     while (node != nullptr) 
     {
         cout << node->iPayload << " ";
@@ -107,31 +105,29 @@ void swapNodes(Node* node1, Node* node2)
     node2->iPayload = temp;
 }
 
-void bubbleSort(Node* head) 
+void selectionSort(Node* head) 
 {
-    int swapped;
     Node* ptr;
-    Node* lastPtr = nullptr;
+    Node* minNode;
 
-    if (head == nullptr) return;
-
-    do 
+    for (ptr = head; ptr->ptrNext != nullptr; ptr = ptr->ptrNext) 
     {
-        swapped = 0;
-        ptr = head;
+        minNode = ptr;
 
-        while (ptr->ptrNext != lastPtr) 
+        // Encontra o nó com o menor valor a partir de ptr
+        for (Node* current = ptr->ptrNext; current != nullptr; current = current->ptrNext) 
         {
-            if (ptr->iPayload > ptr->ptrNext->iPayload) 
+            if (current->iPayload < minNode->iPayload) 
             {
-                swapNodes(ptr, ptr->ptrNext);
-                swapped = 1;
+                minNode = current;
             }
-            
-            ptr = ptr->ptrNext;
         }
-        
-        lastPtr = ptr;
-        
-    } while (swapped);
+
+        // Troca os valores dos nós (se necessário)
+        if (minNode != ptr) {
+            swapNodes(minNode, ptr);
+        }
+    }
 }
+
+

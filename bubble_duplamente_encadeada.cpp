@@ -107,31 +107,32 @@ void swapNodes(Node* node1, Node* node2)
     node2->iPayload = temp;
 }
 
-void bubbleSort(Node* head) 
+void bubbleSort(Node* head)
 {
-    int swapped;
-    Node* ptr;
-    Node* lastPtr = nullptr;
+    if (head == nullptr || head->ptrNext == nullptr) return;
 
-    if (head == nullptr) return;
-
-    do 
+    int iLength = 0;
+    Node* current = head;
+    
+    // Determina o comprimento da lista
+    while (current != nullptr) 
     {
-        swapped = 0;
-        ptr = head;
+        iLength++;
+        current = current->ptrNext;
+    }
 
-        while (ptr->ptrNext != lastPtr) 
+    for (int iOuterLoop = 0; iOuterLoop < iLength - 1; iOuterLoop++) 
+    {
+        current = head;
+
+        for (int iInnerLoop = 0; iInnerLoop < iLength - 1; iInnerLoop++) 
         {
-            if (ptr->iPayload > ptr->ptrNext->iPayload) 
+            if (current->iPayload > current->ptrNext->iPayload) 
             {
-                swapNodes(ptr, ptr->ptrNext);
-                swapped = 1;
+                swapNodes(current, current->ptrNext);
             }
             
-            ptr = ptr->ptrNext;
+            current = current->ptrNext;
         }
-        
-        lastPtr = ptr;
-        
-    } while (swapped);
+    }
 }

@@ -107,27 +107,31 @@ void swapNodes(Node* node1, Node* node2)
 
 void selectionSort(Node* head) 
 {
-    Node* ptr;
-    Node* minNode;
+    if (head == nullptr || head->ptrNext == nullptr) return;
 
-    for (ptr = head; ptr->ptrNext != nullptr; ptr = ptr->ptrNext) 
+    int iLength = 0;
+    Node* current = head;
+    
+    // Determina o comprimento da lista
+    while (current != nullptr) 
     {
-        minNode = ptr;
+        iLength++;
+        current = current->ptrNext;
+    }
 
-        // Encontra o nó com o menor valor a partir de ptr
-        for (Node* current = ptr->ptrNext; current != nullptr; current = current->ptrNext) 
+    for (int iOuterLoop = 0; iOuterLoop < iLength; iOuterLoop++) 
+    {
+        current = head;
+
+        for (int iInnerLoop = iOuterLoop + 1; iInnerLoop < iLength; iInnerLoop++) 
         {
-            if (current->iPayload < minNode->iPayload) 
+            if (current->iPayload > current->ptrNext->iPayload) 
             {
-                minNode = current;
+                swapNodes(current, current->ptrNext);
             }
-        }
-
-        // Troca os valores dos nós (se necessário)
-        if (minNode != ptr) {
-            swapNodes(minNode, ptr);
+            
+            current = current->ptrNext;
         }
     }
 }
-
 

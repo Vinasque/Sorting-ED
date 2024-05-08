@@ -22,8 +22,11 @@ void insertEnd(Node**, int);
 void displayList(Node*);
 void swapNodes(Node*, Node*);
 void selectionSort(Node*);
+void optimizedSelectionSort(Node*);
 
 int main() {
+    cout << "Teste com a função original:\n" << endl;
+    
     int arriNumbers1[] = {42, 7, 0, 3, 666, 1, 111, 10, 13};
     int iArraySize = 9;
     
@@ -45,6 +48,27 @@ int main() {
 
     auto timeDuration = duration_cast<nanoseconds>(timeStop - timeStart);
     cout << "Tempo utilizado: " << timeDuration.count() << " nanosegundos." << endl;
+
+    cout << "\nTeste com a função otimizada:\n" << endl;
+
+    head = nullptr;
+    for (int i = 0; i < iArraySize; ++i) 
+    {
+        insertEnd(&head, arriNumbers1[i]);
+    }
+
+    cout << "Lista original: ";
+    displayList(head);
+
+    auto timeStartOptimized = high_resolution_clock::now();
+    optimizedSelectionSort(head);
+    auto timeStopOptimized = high_resolution_clock::now();
+
+    cout << "Lista ordenada: ";
+    displayList(head);
+
+    auto timeDurationOptimized = duration_cast<nanoseconds>(timeStopOptimized - timeStartOptimized);
+    cout << "Tempo utilizado: " << timeDurationOptimized.count() << " nanosegundos." << endl;
 
     return 0;
 }
@@ -119,19 +143,63 @@ void selectionSort(Node* head)
         current = current->ptrNext;
     }
 
+    current = head;
+
     for (int iOuterLoop = 0; iOuterLoop < iLength; iOuterLoop++) 
-    {
-        current = head;
+    {        
+        Node* temp = current->ptrNext;
 
         for (int iInnerLoop = iOuterLoop + 1; iInnerLoop < iLength; iInnerLoop++) 
         {
-            if (current->iPayload > current->ptrNext->iPayload) 
+            if (current->iPayload > temp->iPayload) 
             {
-                swapNodes(current, current->ptrNext);
+                swapNodes(current, temp);
             }
             
-            current = current->ptrNext;
+            temp = temp->ptrNext;
         }
+
+        current = current->ptrNext;
+    }
+}
+
+void optimizedSelectionSort(Node* head) 
+{
+    if (head == nullptr || head->ptrNext == nullptr) return;
+
+    int iLength = 0;
+    Node* current = head;
+    
+    // Determina o comprimento da lista
+    while (current != nullptr) 
+    {
+        iLength++;
+        current = current->ptrNext;
+    }
+
+    current = head;
+
+    for (int iOuterLoop = 0; iOuterLoop < iLength - 1; iOuterLoop++) 
+    {
+        Node* temp = current->ptrNext;
+        Node* smallest = current->ptrNext;
+
+        for (int iInnerLoop = iOuterLoop + 1; iInnerLoop < iLength; iInnerLoop++) 
+        {
+            if (smallest->iPayload > temp->iPayload) 
+            {
+                smallest = temp;
+            }
+
+            temp = temp->ptrNext;
+        }
+
+        if (smallest->iPayload < current->iPayload)
+        {
+            swapNodes(current, smallest);
+        }
+
+        current = current->ptrNext;
     }
 }
 

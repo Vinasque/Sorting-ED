@@ -51,21 +51,21 @@ int main() {
 
     cout << "\nTeste com a função otimizada:\n" << endl;
 
-    head = nullptr;
+    Node* headOptimized = nullptr;
     for (int i = 0; i < iArraySize; ++i) 
     {
-        insertEnd(&head, arriNumbers1[i]);
+        insertEnd(&headOptimized, arriNumbers1[i]);
     }
 
     cout << "Lista original: ";
-    displayList(head);
+    displayList(headOptimized);
 
     auto timeStartOptimized = high_resolution_clock::now();
-    optimizedSelectionSort(head);
+    optimizedSelectionSort(headOptimized);
     auto timeStopOptimized = high_resolution_clock::now();
 
     cout << "Lista ordenada: ";
-    displayList(head);
+    displayList(headOptimized);
 
     auto timeDurationOptimized = duration_cast<nanoseconds>(timeStopOptimized - timeStartOptimized);
     cout << "Tempo utilizado: " << timeDurationOptimized.count() << " nanosegundos." << endl;

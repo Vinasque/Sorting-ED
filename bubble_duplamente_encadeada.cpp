@@ -22,9 +22,11 @@ void insertEnd(Node**, int);
 void displayList(Node*);
 void swapNodes(Node*, Node*);
 void bubbleSort(Node*);
+void optimizedBubbleSort(Node*);
 
 int main() {
     Node* head = nullptr;
+    Node* headOptimized = nullptr;
     
     insertEnd(&head, 42);
     insertEnd(&head, 7);
@@ -35,7 +37,19 @@ int main() {
     insertEnd(&head, 111);
     insertEnd(&head, 10);
     insertEnd(&head, 13);
-
+    
+    insertEnd(&headOptimized, 42);
+    insertEnd(&headOptimized, 7);
+    insertEnd(&headOptimized, 0);
+    insertEnd(&headOptimized, 3);
+    insertEnd(&headOptimized, 666);
+    insertEnd(&headOptimized, 1);
+    insertEnd(&headOptimized, 111);
+    insertEnd(&headOptimized, 10);
+    insertEnd(&headOptimized, 13);
+    
+    cout << "Teste com a função original:\n" << endl;
+    
     cout << "Lista original: ";
     displayList(head);
 
@@ -48,6 +62,21 @@ int main() {
     
     auto timeDuration = duration_cast<nanoseconds>(timeStop - timeStart);
     cout << "Tempo utilizado: " << timeDuration.count() << " nanosegundos." << endl;
+    
+    cout << "\nTeste com a função otimizada:\n" << endl;
+    
+    cout << "Lista original: ";
+    displayList(headOptimized);
+
+    auto timeStartOptimized = high_resolution_clock::now();
+    bubbleSort(headOptimized);
+    auto timeStopOptimized = high_resolution_clock::now();
+
+    cout << "Lista ordenada: ";
+    displayList(headOptimized);
+    
+    auto timeDurationOptimized = duration_cast<nanoseconds>(timeStopOptimized - timeStartOptimized);
+    cout << "Tempo utilizado: " << timeDurationOptimized.count() << " nanosegundos." << endl;
 
     return 0;
 }
@@ -133,6 +162,43 @@ void bubbleSort(Node* head)
             }
             
             current = current->ptrNext;
+        }
+    }
+}
+
+void optimizedBubbleSort(Node* head)
+{
+    if (head == nullptr || head->ptrNext == nullptr) return;
+
+    int iLength = 0;
+    Node* current = head;
+    bool bSwapped = true;
+
+    // Determina o comprimento da lista
+    while (current != nullptr) 
+    {
+        iLength++;
+        current = current->ptrNext;
+    }
+
+    for (int iOuterLoop = 0; iOuterLoop < iLength - 1; iOuterLoop++) 
+    {
+        bSwapped = false;
+        current = head;
+
+        for (int iInnerLoop = 0; iInnerLoop < iLength - 1 - iOuterLoop; iInnerLoop++) 
+        {
+            if (current->iPayload > current->ptrNext->iPayload) 
+            {
+                bSwapped = true;
+                swapNodes(current, current->ptrNext);
+            }
+            
+            current = current->ptrNext;
+        }
+        if (!bSwapped)
+        {
+            return;
         }
     }
 }

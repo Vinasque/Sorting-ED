@@ -1,5 +1,6 @@
 #include <iostream>
 #include <chrono>
+#include <cstdlib>
 
 using std::cin;
 using std::cout;
@@ -9,6 +10,8 @@ using std::string;
 using std::chrono::high_resolution_clock;
 using std::chrono::duration_cast;
 using std::chrono::nanoseconds;
+
+using std::rand;
 
 typedef struct Node 
 {
@@ -69,6 +72,32 @@ int main() {
 
     auto timeDurationOptimized = duration_cast<nanoseconds>(timeStopOptimized - timeStartOptimized);
     cout << "Tempo utilizado: " << timeDurationOptimized.count() << " nanosegundos." << endl;
+
+    cout << "\nUsando listas com 1000 termos:\n" << endl;
+
+    Node* headBig = nullptr;
+    Node* headBigOptimized = nullptr;
+
+    for (int i = 0; i < 1000; ++i) 
+    {
+        int iRandNum = rand() % 101; //Entre 0 e 100
+        insertEnd(&headBig, iRandNum);
+        insertEnd(&headBigOptimized, iRandNum);
+    }
+
+    auto timeStartBigOptimized = high_resolution_clock::now();
+    optimizedSelectionSort(headBigOptimized);
+    auto timeStopBigOptimized = high_resolution_clock::now();
+
+    auto timeStartBig = high_resolution_clock::now();
+    selectionSort(headBig);
+    auto timeStopBig = high_resolution_clock::now();
+
+    auto timeDurationBig = duration_cast<nanoseconds>(timeStopBig - timeStartBig);
+    cout << "Tempo utilizado com a função original: " << timeDurationBig.count() << " nanosegundos." << endl;
+
+    auto timeDurationBigOptimized = duration_cast<nanoseconds>(timeStopBigOptimized - timeStartBigOptimized);
+    cout << "Tempo utilizado com a função otimizada: " << timeDurationBigOptimized.count() << " nanosegundos." << endl;
 
     return 0;
 }

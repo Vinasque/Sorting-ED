@@ -24,8 +24,9 @@ Node* createNode(int);
 void insertEnd(Node**, int);
 void displayList(Node*);
 void swapNodes(Node*, Node*);
+void insertNode(Node*, Node*);
 void insertionSort(Node*);
-void optimizedInsertionSort(Node*);
+void insertionSort(Node*);
 
 int main() {
     cout << "Teste com a função original:\n" << endl;
@@ -52,27 +53,6 @@ int main() {
     auto timeDuration = duration_cast<nanoseconds>(timeStop - timeStart);
     cout << "Tempo utilizado: " << timeDuration.count() << " nanosegundos." << endl;
 
-    cout << "\nTeste com a função otimizada:\n" << endl;
-
-    Node* headOptimized = nullptr;
-    for (int i = 0; i < iArraySize; ++i) 
-    {
-        insertEnd(&headOptimized, arriNumbers1[i]);
-    }
-
-    cout << "Lista original: ";
-    displayList(headOptimized);
-
-    auto timeStartOptimized = high_resolution_clock::now();
-    optimizedInsertionSort(headOptimized);
-    auto timeStopOptimized = high_resolution_clock::now();
-
-    cout << "Lista ordenada: ";
-    displayList(headOptimized);
-
-    auto timeDurationOptimized = duration_cast<nanoseconds>(timeStopOptimized - timeStartOptimized);
-    cout << "Tempo utilizado: " << timeDurationOptimized.count() << " nanosegundos." << endl;
-
     cout << "\nUsando listas com 1000 termos:\n" << endl;
 
     Node* headBig = nullptr;
@@ -85,19 +65,12 @@ int main() {
         insertEnd(&headBigOptimized, iRandNum);
     }
 
-    auto timeStartBigOptimized = high_resolution_clock::now();
-    optimizedInsertionSort(headBigOptimized);
-    auto timeStopBigOptimized = high_resolution_clock::now();
-
     auto timeStartBig = high_resolution_clock::now();
     insertionSort(headBig);
     auto timeStopBig = high_resolution_clock::now();
 
     auto timeDurationBig = duration_cast<nanoseconds>(timeStopBig - timeStartBig);
     cout << "Tempo utilizado com a função original: " << timeDurationBig.count() << " nanosegundos." << endl;
-
-    auto timeDurationBigOptimized = duration_cast<nanoseconds>(timeStopBigOptimized - timeStartBigOptimized);
-    cout << "Tempo utilizado com a função otimizada: " << timeDurationBigOptimized.count() << " nanosegundos." << endl;
 
     return 0;
 }
@@ -158,7 +131,80 @@ void swapNodes(Node* node1, Node* node2)
     node2->iPayload = temp;
 }
 
-void insertionSort(Node* head)
+void insertNodeBefore(Node* node, Node* nodeToInsert) 
 {
+    Node* nodePrev = node->ptrPrev;
+    Node* nodeNext = node;
+    
+    if (nodeToInsert->ptrNext == nullptr)
+    {
+        nodeToInsert->ptrPrev->ptrNext = nullptr;
+    }
+    else 
+    {
+        nodeToInsert->ptrNext->ptrPrev = nodeToInsert->ptrPrev;
+        nodeToInsert->ptrPrev->ptrNext = nodeToInsert->ptrNext;
+    }
+    
+    if (nodePrev == nullptr)
+    {
+        nodeNext->ptrPrev = nodeToInsert;
+        nodeToInsert->ptrNext = nodeNext;
+        nodeToInsert->ptrPrev = nullptr;
+    }
+    else 
+    {
+        nodeNext->ptrPrev = nodeToInsert;
+        nodePrev->ptrNext = nodeToInsert;
+    
+        nodeToInsert->ptrPrev = nodePrev;
+        nodeToInsert->ptrNext = nodeNext;
+    }
+}
+
+void insertionSort(Node** head)
+{
+    if (*head == nullptr || (*head)->ptrNext == nullptr) return;
+
+    int iLength = 0;
+    Node* outer = *head;
+    
+    // Determina o comprimento da lista
+    while (outer != nullptr) 
+    {
+        iLength++;
+        outer = outer->ptrNext;
+    }
+
+    outer = *head;
+    Node* inner = *head;
+
+    for (int iOuterLoop = 0; iOuterLoop < iLength - 1; iOuterLoop++) 
+    {
+        if (outer->iPayload > outer->ptrNext->iPayload) 
+        {
+            while (inner->ptrPrev != nullptr && inner->ptrPrev->iPayload > outer->ptrNext->iPayload) 
+            {
+                inner = inner->ptrPrev;
+            }
+
+            if (inner->ptrPrev == nullptr)
+            {
+                *head = outer->ptrNext;
+                insertNodeBefore(outer, outer->ptrNext);
+            }
+            else
+            {
+                insertNodeBefore(inner, outer->ptrNext);
+            }
+            
+            inner = outer;
+        }
+        else
+        {
+            outer = outer->ptrNext;
+            inner = outer;
+        }
+    }
     
 }

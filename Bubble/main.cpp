@@ -1,5 +1,6 @@
 #include <iostream>
 #include <chrono>
+#include "functions.h"
 
 using std::cin;
 using std::cout;
@@ -16,13 +17,6 @@ typedef struct Node
     Node* ptrNext;
     Node* ptrPrev;
 } Node;
-
-Node* createNode(int);
-void insertEnd(Node**, int);
-void displayList(Node*);
-void swapNodes(Node*, Node*);
-void bubbleSort(Node*);
-void optimizedBubbleSort(Node*);
 
 int main() {
     Node* head = nullptr;
@@ -105,126 +99,4 @@ int main() {
     cout << "Tempo utilizado com a função otimizada: " << timeDurationBigOptimized.count() << " nanosegundos." << endl;
 
     return 0;
-}
-
-Node* createNode(int iPayload) 
-{
-    Node* temp = new Node;
-    temp->iPayload = iPayload;
-    temp->ptrNext = nullptr;
-    temp->ptrPrev = nullptr;
-    return temp;
-}
-
-void insertEnd(Node** head, int iPayload) 
-{
-    Node* newNode = createNode(iPayload);
-
-    if (*head == nullptr) 
-    {
-        *head = newNode;
-    } 
-    else 
-    {
-        Node* temp = *head;
-        
-        while (temp->ptrNext != nullptr) 
-        {
-            temp = temp->ptrNext;
-        }
-        
-        temp->ptrNext = newNode;
-        newNode->ptrPrev = temp;
-    }
-}
-
-void displayList(Node* node) 
-{
-    if (node == nullptr) 
-    {
-        cout << "Lista vazia." << endl;
-        return;
-    }
-
-    while (node != nullptr) 
-    {
-        cout << node->iPayload << " ";
-        node = node->ptrNext;
-    }
-    
-    cout << endl;
-}
-
-void swapNodes(Node* node1, Node* node2) 
-{
-    int temp = node1->iPayload;
-    node1->iPayload = node2->iPayload;
-    node2->iPayload = temp;
-}
-
-void bubbleSort(Node* head)
-{
-    if (head == nullptr || head->ptrNext == nullptr) return;
-
-    int iLength = 0;
-    Node* current = head;
-    
-    // Determina o comprimento da lista
-    while (current != nullptr) 
-    {
-        iLength++;
-        current = current->ptrNext;
-    }
-
-    for (int iOuterLoop = 0; iOuterLoop < iLength - 1; iOuterLoop++) 
-    {
-        current = head;
-
-        for (int iInnerLoop = 0; iInnerLoop < iLength - 1; iInnerLoop++) 
-        {
-            if (current->iPayload > current->ptrNext->iPayload) 
-            {
-                swapNodes(current, current->ptrNext);
-            }
-            
-            current = current->ptrNext;
-        }
-    }
-}
-
-void optimizedBubbleSort(Node* head)
-{
-    if (head == nullptr || head->ptrNext == nullptr) return;
-
-    int iLength = 0;
-    Node* current = head;
-    bool bSwapped = true;
-
-    // Determina o comprimento da lista
-    while (current != nullptr) 
-    {
-        iLength++;
-        current = current->ptrNext;
-    }
-
-    for (int iOuterLoop = 0; iOuterLoop < iLength - 1; iOuterLoop++) 
-    {
-        bSwapped = false;
-        current = head;
-
-        for (int iInnerLoop = 0; iInnerLoop < iLength - 1 - iOuterLoop; iInnerLoop++) 
-        {
-            if (current->iPayload > current->ptrNext->iPayload) 
-            {
-                bSwapped = true;
-                swapNodes(current, current->ptrNext);
-            }
-            
-            current = current->ptrNext;
-        }
-        if (!bSwapped)
-        {
-            return;
-        }
-    }
 }

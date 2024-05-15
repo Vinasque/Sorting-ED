@@ -3,7 +3,7 @@
 
 Node* createNode(int iPayload) 
 {
-    Node* temp = (*Node)malloc(sizeof(Node));
+    Node* temp = (Node*)malloc(sizeof(Node));
     temp->iPayload = iPayload;
     temp->ptrNext = nullptr;
     temp->ptrPrev = nullptr;

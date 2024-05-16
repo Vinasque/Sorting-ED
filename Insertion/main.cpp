@@ -46,24 +46,27 @@ int main() {
     auto timeDuration = duration_cast<nanoseconds>(timeStop - timeStart);
     cout << "Tempo utilizado: " << timeDuration.count() << " nanosegundos." << endl;
 
-    cout << "\nUsando listas com 1000 termos:\n" << endl;
+    cout << "\nUsando 100 listas com 10000 termos:\n" << endl;
 
     Node* headBig = nullptr;
     Node* headBigOptimized = nullptr;
 
-    for (int i = 0; i < 1000; ++i) 
+    for (int j = 1; j < 101; j++)
     {
-        int iRandNum = rand() % 101; //Entre 0 e 100
-        insertEnd(&headBig, iRandNum);
-        insertEnd(&headBigOptimized, iRandNum);
+        for (int i = 0; i < 10000; ++i) 
+        {
+            int iRandNum = rand() % 101; //Entre 0 e 100
+            insertEnd(&headBig, iRandNum);
+            insertEnd(&headBigOptimized, iRandNum);
+        }
+
+        auto timeStartBig = high_resolution_clock::now();
+        insertionSort(headBig);
+        auto timeStopBig = high_resolution_clock::now();
+
+        auto timeDurationBig = duration_cast<nanoseconds>(timeStopBig - timeStartBig);
+        cout << "(" << j << ") Função original: " << timeDurationBig.count() << " nanosegundos." << endl;
     }
-
-    auto timeStartBig = high_resolution_clock::now();
-    insertionSort(headBig);
-    auto timeStopBig = high_resolution_clock::now();
-
-    auto timeDurationBig = duration_cast<nanoseconds>(timeStopBig - timeStartBig);
-    cout << "Tempo utilizado com a função original: " << timeDurationBig.count() << " nanosegundos." << endl;
 
     return 0;
 }

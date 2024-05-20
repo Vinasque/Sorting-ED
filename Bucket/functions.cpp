@@ -1,10 +1,7 @@
 #include <iostream>
 #include "functions.h"
 
-using std::cin;
-using std::cout;
-using std::endl;
-using std::string;
+using namespace std;
 
 Node* createNode(int iPayload) 
 {
@@ -157,7 +154,7 @@ void insertionSort(Node** head)
     }
 }
 
-void BucketSort(Node** head)
+void bucketSort(Node** head)
 {
     if (*head == nullptr || (*head)->ptrNext == nullptr) return;
 

@@ -14,4 +14,4 @@ void swapNodes(Node*, Node*);
 void deleteList(Node** head);
 void insertNode(Node*, Node*);
 void insertionSort(Node**);
-void BucketSort(Node**);
+void bucketSort(Node**);

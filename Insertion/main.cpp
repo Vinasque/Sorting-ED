@@ -3,16 +3,8 @@
 #include <cstdlib>
 #include "functions.h"
 
-using std::cin;
-using std::cout;
-using std::endl;
-using std::string;
-
-using std::chrono::high_resolution_clock;
-using std::chrono::duration_cast;
-using std::chrono::nanoseconds;
-
-using std::rand;
+using namespace std;
+using namespace std::chrono;
 
 int main() {
     cout << "Teste com a função original:\n" << endl;

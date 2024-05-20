@@ -69,7 +69,7 @@ int main() {
     {
         for (int i = 0; i < 1000; ++i) 
         {
-            int iRandNum = rand() % 101; //Entre 0 e 100
+            int iRandNum = rand() % 100 + 1; //Entre 1 e 100
             insertEnd(&headBig, iRandNum);
             insertEnd(&headBigOptimized, iRandNum);
         }

@@ -54,6 +54,24 @@ void displayList(Node* node)
     cout << endl;
 }
 
+void deleteList(Node** head) {
+    if (*head == nullptr) {
+        cout << "Lista já está vazia." << endl;
+        return;
+    }
+
+    Node* current = *head;
+    Node* nextNode = nullptr;
+
+    while (current != nullptr) {
+        nextNode = current->ptrNext;
+        free(current);
+        current = nextNode;
+    }
+
+    *head = nullptr;
+}
+
 void swapNodes(Node* node1, Node* node2) 
 {
     int temp = node1->iPayload;

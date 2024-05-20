@@ -62,6 +62,24 @@ void swapNodes(Node* node1, Node* node2)
     node2->iPayload = temp;
 }
 
+void deleteList(Node** head) {
+    if (*head == nullptr) {
+        cout << "Lista já está vazia." << endl;
+        return;
+    }
+
+    Node* current = *head;
+    Node* nextNode = nullptr;
+
+    while (current != nullptr) {
+        nextNode = current->ptrNext;
+        free(current);
+        current = nextNode;
+    }
+
+    *head = nullptr;
+}
+
 void insertNodeBefore(Node* node, Node* nodeToInsert) 
 {
     Node* nodePrev = node->ptrPrev;

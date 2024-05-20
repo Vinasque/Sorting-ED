@@ -87,6 +87,9 @@ int main() {
 
         auto timeDurationBigOptimized = duration_cast<nanoseconds>(timeStopBigOptimized - timeStartBigOptimized);
         cout << "(" << j << ") Função otimizada: " << timeDurationBigOptimized.count() << " nanosegundos." << endl;
+
+        deleteList(&headBig);
+        deleteList(&headBigOptimized);
     }
 
     return 0;

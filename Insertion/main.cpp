@@ -59,6 +59,9 @@ int main() {
 
         auto timeDurationBig = duration_cast<nanoseconds>(timeStopBig - timeStartBig);
         cout << "(" << j << ") Função original: " << timeDurationBig.count() << " nanosegundos." << endl;
+
+        deleteList(&headBig);
+        deleteList(&headBigOptimized);
     }
 
     return 0;

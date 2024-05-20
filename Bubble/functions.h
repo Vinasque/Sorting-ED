@@ -11,5 +11,6 @@ Node* createNode(int);
 void insertEnd(Node**, int);
 void displayList(Node*);
 void swapNodes(Node*, Node*);
+void deleteList(Node** head);
 void bubbleSort(Node*);
 void optimizedBubbleSort(Node*);

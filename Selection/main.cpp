@@ -14,13 +14,6 @@ using std::chrono::nanoseconds;
 
 using std::rand;
 
-typedef struct Node 
-{
-    int iPayload;
-    Node* ptrNext;
-    Node* ptrPrev;
-} Node;
-
 int main() {
     cout << "Teste com a função original:\n" << endl;
     
@@ -93,7 +86,7 @@ int main() {
         cout << "(" << j << ") Função original: " << timeDurationBig.count() << " nanosegundos." << endl;
 
         auto timeDurationBigOptimized = duration_cast<nanoseconds>(timeStopBigOptimized - timeStartBigOptimized);
-        cout << "(" << j ") Função otimizada: " << timeDurationBigOptimized.count() << " nanosegundos." << endl;
+        cout << "(" << j << ") Função otimizada: " << timeDurationBigOptimized.count() << " nanosegundos." << endl;
     }
 
     return 0;

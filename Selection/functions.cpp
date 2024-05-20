@@ -1,6 +1,11 @@
 #include <iostream>
 #include "functions.h"
 
+using std::cin;
+using std::cout;
+using std::endl;
+using std::string;
+
 Node* createNode(int iPayload) 
 {
     Node* temp = (Node*)malloc(sizeof(Node));

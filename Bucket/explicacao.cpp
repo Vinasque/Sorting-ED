@@ -57,7 +57,7 @@ void explicaBucket()
     cout << "------------------------------------------------------------" << endl;
 
     // Passo 2: Criar os buckets
-    cout << "Passo 2: Criando os buckets...\n" << endl;
+    cout << "Passo 2: Criando os buckets... \n" << endl;
     cout << "O tamanho dos buckets é dado por: (MaiorValor / 10) + 1\n";
     int iBucketSize = (iMaxValue / 10) + 1;
     Node* nodeArray[10] = {nullptr};

@@ -160,50 +160,39 @@ void bucketSort(Node** head)
 
     int iLength = 0;
     Node* outer = *head;
-    int iBucketSize = outer->iPayload;
+    int iMaxValue = outer->iPayload;
 
-    // Determina o comprimento da lista
+    // Determina o comprimento da lista e o maior valor
     while (outer != nullptr) 
     {
-        if (iBucketSize < outer->iPayload) iBucketSize = outer->iPayload;
+        if (iMaxValue < outer->iPayload) iMaxValue = outer->iPayload;
         iLength++;
         outer = outer->ptrNext;
     }
 
-    iBucketSize = iBucketSize/10;
+    int iBucketSize = (iMaxValue / 10) + 1; // Para evitar bucket 0 em alguns casos
 
     outer = *head;
 
     Node* nodeArray[10] = {nullptr};
 
-    for (int i = 0; i < 10; i++)
+    // Distribui os elementos nos buckets
+    while (outer != nullptr) 
     {
-        Node* headBucket = nullptr;
-        nodeArray[i] = headBucket;
-    }
-
-    for (int iOuterLoop = 0; iOuterLoop < iLength; iOuterLoop++) 
-    {
-        for (int iInnerLoop = 0; iInnerLoop < 10; iInnerLoop++)
-        {
-            if (outer->iPayload > iBucketSize * iInnerLoop && outer->iPayload <= iBucketSize * (iInnerLoop + 1))
-            {
-                Node* headBucket = nodeArray[iInnerLoop];
-                insertEnd(&nodeArray[iInnerLoop], outer->iPayload);
-            }
-        }
-
+        int bucketIndex = outer->iPayload / iBucketSize;
+        if (bucketIndex > 9) bucketIndex = 9; // O índice do bucket não pode ser maior que 9
+        insertEnd(&nodeArray[bucketIndex], outer->iPayload);
         outer = outer->ptrNext;
     }
 
-    deleteList(head);
+    // Ordena cada bucket e reinsere na lista original
+    *head = nullptr; // Reseta a lista original
 
     for (int i = 0; i < 10; i++)
     {
-        Node* headBucket = nodeArray[i];
-        insertionSort(&headBucket);
+        insertionSort(&nodeArray[i]);
 
-        Node* current = headBucket;
+        Node* current = nodeArray[i];
         while (current != nullptr)
         {
             insertEnd(head, current->iPayload);
@@ -211,9 +200,9 @@ void bucketSort(Node** head)
         }
     }
 
+    // Limpa os buckets
     for (int i = 0; i < 10; i++)
     {
-        Node* headBucket = nodeArray[i];
-        deleteList(&headBucket);
+        deleteList(&nodeArray[i]);
     }
 }

@@ -9,8 +9,8 @@ using namespace std::chrono;
 int main() {
     cout << "Teste com a função original:\n" << endl;
     
-    int arriNumbers1[] = {42, 7, 2, 3, 12, 1, 4, 10, 13};
-    int iArraySize = 9;
+    int arriNumbers1[] = {42, 7, 3, 12, 1, 4, 10, 13, 2, 6};
+    int iArraySize = 10;
     
     Node* head = nullptr;
     for (int i = 0; i < iArraySize; ++i) 

@@ -14,13 +14,6 @@ using std::chrono::nanoseconds;
 
 using std::rand;
 
-typedef struct Node 
-{
-    int iPayload;
-    Node* ptrNext;
-    Node* ptrPrev;
-} Node;
-
 int main() {
     cout << "Teste com a função original:\n" << endl;
     
@@ -37,7 +30,7 @@ int main() {
     displayList(head);
 
     auto timeStart = high_resolution_clock::now();
-    insertionSort(head);
+    insertionSort(&head);
     auto timeStop = high_resolution_clock::now();
 
     cout << "Lista ordenada: ";
@@ -61,7 +54,7 @@ int main() {
         }
 
         auto timeStartBig = high_resolution_clock::now();
-        insertionSort(headBig);
+        insertionSort(&headBig);
         auto timeStopBig = high_resolution_clock::now();
 
         auto timeDurationBig = duration_cast<nanoseconds>(timeStopBig - timeStartBig);

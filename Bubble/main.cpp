@@ -11,13 +11,6 @@ using std::chrono::high_resolution_clock;
 using std::chrono::duration_cast;
 using std::chrono::nanoseconds;
 
-typedef struct Node 
-{
-    int iPayload;
-    Node* ptrNext;
-    Node* ptrPrev;
-} Node;
-
 int main() 
 {
     Node* head = nullptr;

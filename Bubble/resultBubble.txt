@@ -1,0 +1,42 @@
+Teste com a função original:
+
+Lista original: 42 7 0 3 666 1 111 10 13 
+Lista ordenada: 0 1 3 7 10 13 42 111 666 
+Tempo utilizado: 0 nanosegundos.
+
+Teste com a função otimizada:
+
+Lista original: 42 7 0 3 666 1 111 10 13 
+Lista ordenada: 0 1 3 7 10 13 42 111 666 
+Tempo utilizado: 0 nanosegundos.
+
+Usando 100 listas com 10000 termos:
+
+(1) Função original: 811363100 nanosegundos.
+(1) Função otimizada: 408031400 nanosegundos.
+(2) Função original: 3743252900 nanosegundos.
+(2) Função otimizada: 1882748000 nanosegundos.
+(3) Função original: 8517437600 nanosegundos.
+(3) Função otimizada: 4453986800 nanosegundos.
+(4) Função original: 15907833300 nanosegundos.
+(4) Função otimizada: 7644252200 nanosegundos.
+(5) Função original: 25444003900 nanosegundos.
+(5) Função otimizada: 12336023200 nanosegundos.
+(6) Função original: 36753918400 nanosegundos.
+(6) Função otimizada: 18255522300 nanosegundos.
+(7) Função original: 49883827400 nanosegundos.
+(7) Função otimizada: 24636535800 nanosegundos.
+(8) Função original: 63725690400 nanosegundos.
+(8) Função otimizada: 31775982100 nanosegundos.
+(9) Função original: 90168578600 nanosegundos.
+(9) Função otimizada: 39915818100 nanosegundos.
+(10) Função original: 127607977100 nanosegundos.
+(10) Função otimizada: 55533188200 nanosegundos.
+(11) Função original: 155946025600 nanosegundos.
+(11) Função otimizada: 64447228600 nanosegundos.
+(12) Função original: 186179045200 nanosegundos.
+(12) Função otimizada: 72794225900 nanosegundos.
+(13) Função original: 275303401700 nanosegundos.
+(13) Função otimizada: 87557414100 nanosegundos.
+(14) Função original: 373012999300 nanosegundos.
+(14) Função otimizada: 128543502200 nanosegundos.

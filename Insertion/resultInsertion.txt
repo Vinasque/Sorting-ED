@@ -1,0 +1,53 @@
+Teste com a função original:
+
+Lista original: Payload: 42 7 0 3 666 1 111 10 13 
+Lista ordenada: Payload: 0 1 3 10 13 42 111 666 
+Tempo utilizado: 0 nanosegundos.
+
+Usando 100 listas com 10000 termos:
+
+(1) Função original: 339021300 nanosegundos.
+(2) Função original: 286039000 nanosegundos.
+(3) Função original: 430395700 nanosegundos.
+(4) Função original: 289132700 nanosegundos.
+(5) Função original: 294389100 nanosegundos.
+(6) Função original: 468749300 nanosegundos.
+(7) Função original: 334995500 nanosegundos.
+(8) Função original: 378585400 nanosegundos.
+(9) Função original: 350770200 nanosegundos.
+(10) Função original: 350088400 nanosegundos.
+(11) Função original: 366218900 nanosegundos.
+(12) Função original: 305633700 nanosegundos.
+(13) Função original: 280988600 nanosegundos.
+(14) Função original: 338570300 nanosegundos.
+(15) Função original: 315427900 nanosegundos.
+(16) Função original: 313666000 nanosegundos.
+(17) Função original: 288473600 nanosegundos.
+(18) Função original: 299348600 nanosegundos.
+(19) Função original: 324475100 nanosegundos.
+(20) Função original: 323510000 nanosegundos.
+(21) Função original: 417393300 nanosegundos.
+(22) Função original: 347534600 nanosegundos.
+(23) Função original: 286394800 nanosegundos.
+(24) Função original: 300341600 nanosegundos.
+(25) Função original: 302486400 nanosegundos.
+(26) Função original: 298673600 nanosegundos.
+(27) Função original: 277366700 nanosegundos.
+(28) Função original: 303313900 nanosegundos.
+(29) Função original: 304877000 nanosegundos.
+(30) Função original: 298227000 nanosegundos.
+(31) Função original: 318615400 nanosegundos.
+(32) Função original: 267478200 nanosegundos.
+(33) Função original: 283060200 nanosegundos.
+(34) Função original: 315919900 nanosegundos.
+(35) Função original: 316431400 nanosegundos.
+(36) Função original: 347142300 nanosegundos.
+(37) Função original: 284600000 nanosegundos.
+(38) Função original: 475590100 nanosegundos.
+(39) Função original: 303259800 nanosegundos.
+(40) Função original: 269377400 nanosegundos.
+(41) Função original: 299488900 nanosegundos.
+(42) Função original: 300464100 nanosegundos.
+(43) Função original: 335501300 nanosegundos.
+(44) Função original: 331044800 nanosegundos.
+(45) Função original: 298947600 nanosegundos.

@@ -177,7 +177,7 @@ void BucketSort(Node** head)
 
     outer = *head;
 
-    Node* nodeArray[10];
+    Node* nodeArray[10] = {nullptr};
 
     for (int i = 0; i < 10; i++)
     {
@@ -187,12 +187,12 @@ void BucketSort(Node** head)
 
     for (int iOuterLoop = 0; iOuterLoop < iLength; iOuterLoop++) 
     {
-        for (int i = 0; i <= 10; i++)
+        for (int iInnerLoop = 0; iInnerLoop < 10; iInnerLoop++)
         {
-            if (iBucketSize * (i - 1) < outer->iPayload <= iBucketSize * i)
+            if (outer->iPayload > iBucketSize * iInnerLoop && outer->iPayload <= iBucketSize * (iInnerLoop + 1))
             {
-                Node* headBucket = nodeArray[i];
-                insertEnd(&headBucket, outer->iPayload);
+                Node* headBucket = nodeArray[iInnerLoop];
+                insertEnd(&nodeArray[iInnerLoop], outer->iPayload);
             }
         }
 

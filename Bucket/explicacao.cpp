@@ -1,7 +1,123 @@
 #include <iostream>
-#include "functions.h"
-
 using namespace std;
+
+typedef struct Node 
+{
+    int iPayload;
+    Node* ptrNext;
+    Node* ptrPrev;
+} Node;
+
+Node* createNode(int);
+void insertEnd(Node**, int);
+void displayList(Node*);
+void swapNodes(Node*, Node*);
+void deleteList(Node** head);
+void insertNode(Node*, Node*);
+void insertionSort(Node**);
+void bucketSort(Node**);
+void explicaBucket();
+
+int main()
+{
+    explicaBucket();
+
+    return 0;
+}
+
+void explicaBucket()
+{
+    int arriNumbers[] = {1, 19, 13, 32, 23, 42, 96, 75, 89, 81, 51, 69, 63, 87, 84};
+    int iArraySize = sizeof(arriNumbers) / sizeof(arriNumbers[0]);
+    
+    Node* head = nullptr;
+    for (int i = 0; i < iArraySize; ++i) 
+    {
+        insertEnd(&head, arriNumbers[i]);
+    }
+
+    cout << "Lista original: ";
+    displayList(head);
+    
+    cout << "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=" << endl;
+
+    // Passo 1: Determine o número de buckets e o maior valor
+    cout << "Passo 1: Determinando o número de buckets e o maior valor...\n" << endl;
+    int iLength = 0;
+    Node* outer = head;
+    int iMaxValue = outer->iPayload;
+    while (outer != nullptr) {
+        if (iMaxValue < outer->iPayload) iMaxValue = outer->iPayload;
+        iLength++;
+        outer = outer->ptrNext;
+    }
+    cout << "Comprimento da lista: " << iLength << "\n";
+    cout << "Maior valor na lista: " << iMaxValue << "\n";
+    
+    cout << "------------------------------------------------------------" << endl;
+
+    // Passo 2: Criar os buckets
+    cout << "Passo 2: Criando os buckets... \n" << endl;
+    cout << "O tamanho dos buckets é dado por: (MaiorValor / 10) + 1\n";
+    int iBucketSize = (iMaxValue / 10) + 1;
+    Node* nodeArray[10] = {nullptr};
+    
+    cout << "------------------------------------------------------------" << endl;
+
+    // Passo 3: Distribuir os elementos nos buckets
+    cout << "Passo 3: Distribuindo os elementos nos buckets...\n" << endl;
+    outer = head;
+    while (outer != nullptr) {
+        int bucketIndex = outer->iPayload / iBucketSize;
+        if (bucketIndex > 9) bucketIndex = 9;
+        insertEnd(&nodeArray[bucketIndex], outer->iPayload);
+        cout << "Elemento " << outer->iPayload << " distribuído para o bucket " << bucketIndex << ".\n";
+        outer = outer->ptrNext;
+    }
+    
+    cout << "------------------------------------------------------------" << endl;
+
+    // Passo 4: Ordenar individualmente cada bucket
+    cout << "Passo 4: Ordenando individualmente cada bucket...\n";
+    cout << "OBS: optamos por usar o método Insertion.\n" << endl;
+    for (int i = 0; i < 10; i++) {
+        cout << "Ordenando bucket " << i << "...\n";
+        insertionSort(&nodeArray[i]);
+        cout << "Bucket " << i << " após ordenação: ";
+        displayList(nodeArray[i]);
+    }
+    
+    cout << "------------------------------------------------------------" << endl;
+
+    // Passo 5: Concatenar todos os buckets ordenados
+    cout << "Passo 5: Concatenando todos os buckets ordenados...\n" << endl;
+    head = nullptr;
+    for (int i = 0; i < 10; i++) {
+        Node* current = nodeArray[i];
+        while (current != nullptr) {
+            insertEnd(&head, current->iPayload);
+            current = current->ptrNext;
+        }
+    }
+    cout << "Lista após concatenação: ";
+    displayList(head);
+    
+    cout << "------------------------------------------------------------" << endl;
+
+    // Limpar os buckets
+    cout << "Passo 6: Limpando os buckets...\n";
+    for (int i = 0; i < 10; i++) {
+        deleteList(&nodeArray[i]);
+    }
+
+    cout << "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=" << endl;
+    
+    cout << "Lista ordenada final: ";
+    displayList(head);
+
+    // Limpar a lista principal
+    deleteList(&head);
+}
 
 Node* createNode(int iPayload) 
 {
@@ -42,7 +158,6 @@ void displayList(Node* node)
         return;
     }
 
-    cout << "Payload: ";
     while (node != nullptr) 
     {
         cout << node->iPayload << " ";

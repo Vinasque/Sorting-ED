@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include "functions.h"
 
+using namespace functionsInsertion;
 using namespace std;
 using namespace std::chrono;
 
@@ -12,7 +13,7 @@ int main() {
     int arriNumbers1[] = {42, 7, 0, 3, 666, 1, 111, 10, 13};
     int iArraySize = 9;
     
-    Node* head = nullptr;
+    Node<int>* head = nullptr;
     for (int i = 0; i < iArraySize; ++i) 
     {
         insertEnd(&head, arriNumbers1[i]);
@@ -33,8 +34,8 @@ int main() {
 
     cout << "\nUsando 100 listas com 10000 termos:\n" << endl;
 
-    Node* headBig = nullptr;
-    Node* headBigOptimized = nullptr;
+    Node<int>* headBig = nullptr;
+    Node<int>* headBigOptimized = nullptr;
 
     for (int j = 1; j < 101; j++)
     {

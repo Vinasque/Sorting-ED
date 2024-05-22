@@ -1,16 +1,26 @@
 #pragma once
 
-typedef struct Node 
+template <typename T>
+struct Node 
 {
-    int iPayload;
+    T iPayload;
     Node* ptrNext;
     Node* ptrPrev;
-} Node;
+};
 
-Node* createNode(int);
-void insertEnd(Node**, int);
-void displayList(Node*);
-void swapNodes(Node*, Node*);
-void deleteList(Node** head);
-void bubbleSort(Node*);
-void optimizedBubbleSort(Node*);
+namespace functionsBubble {
+    template <typename T>
+    Node<T>* createNode(T);
+    template <typename T>
+    void insertEnd(Node<T>**, T);
+    template <typename T>
+    void displayList(Node<T>*);
+    template <typename T>
+    void swapNodes(Node<T>*, Node<T>*);
+    template <typename T>
+    void deleteList(Node<T>** head);
+    template <typename T>
+    void bubbleSort(Node<T>*);
+    template <typename T>
+    void optimizedBubbleSort(Node<T>*);
+}

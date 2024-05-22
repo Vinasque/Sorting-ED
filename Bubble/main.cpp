@@ -3,13 +3,14 @@
 #include <cstdlib>
 #include "functions.h"
 
+using namespace functionsBubble;
 using namespace std;
 using namespace std::chrono;
 
 int main() 
 {
-    Node* head = nullptr;
-    Node* headOptimized = nullptr;
+    Node<int>* head = nullptr;
+    Node<int>* headOptimized = nullptr;
     
     insertEnd(&head, 42);
     insertEnd(&head, 7);
@@ -63,8 +64,8 @@ int main()
 
      cout << "\nUsando 100 listas com 10000 termos:\n" << endl;
 
-    Node* headBig = nullptr;
-    Node* headBigOptimized = nullptr;
+    Node<int>* headBig = nullptr;
+    Node<int>* headBigOptimized = nullptr;
     
     for (int j = 1; j < 101; j++)
     {

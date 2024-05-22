@@ -9,7 +9,7 @@ namespace functionsInsertion {
     template <typename T>
     Node<T>* createNode(T iPayload) 
     {
-        Node<T>* temp = new Node<T>();
+        Node<T>* temp = (Node<T>*)malloc(sizeof(Node<T>));
         temp->iPayload = iPayload;
         temp->ptrNext = nullptr;
         temp->ptrPrev = nullptr;

@@ -41,8 +41,8 @@ void explicaBucket()
     
     cout << "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=" << endl;
 
-    // Passo 1: Determine o número de buckets e o maior valor
-    cout << "Passo 1: Determinando o número de buckets e o maior valor...\n" << endl;
+    // Passo 1: Determine o numero de buckets e o maior valor
+    cout << "Passo 1: Determinando o numero de buckets e o maior valor...\n" << endl;
     int iLength = 0;
     Node* outer = head;
     int iMaxValue = outer->iPayload;
@@ -58,7 +58,7 @@ void explicaBucket()
 
     // Passo 2: Criar os buckets
     cout << "Passo 2: Criando os buckets... \n" << endl;
-    cout << "O tamanho dos buckets é dado por: (MaiorValor / 10) + 1\n";
+    cout << "O tamanho dos buckets e dado por: (MaiorValor / 10) + 1\n";
     int iBucketSize = (iMaxValue / 10) + 1;
     Node* nodeArray[10] = {nullptr};
     
@@ -71,7 +71,7 @@ void explicaBucket()
         int bucketIndex = outer->iPayload / iBucketSize;
         if (bucketIndex > 9) bucketIndex = 9;
         insertEnd(&nodeArray[bucketIndex], outer->iPayload);
-        cout << "Elemento " << outer->iPayload << " distribuído para o bucket " << bucketIndex << ".\n";
+        cout << "Elemento " << outer->iPayload << " distribuido para o bucket " << bucketIndex << ".\n";
         outer = outer->ptrNext;
     }
     
@@ -79,11 +79,11 @@ void explicaBucket()
 
     // Passo 4: Ordenar individualmente cada bucket
     cout << "Passo 4: Ordenando individualmente cada bucket...\n";
-    cout << "OBS: optamos por usar o método Insertion.\n" << endl;
+    cout << "OBS: optamos por usar o metodo Insertion.\n" << endl;
     for (int i = 0; i < 10; i++) {
         cout << "Ordenando bucket " << i << "...\n";
         insertionSort(&nodeArray[i]);
-        cout << "Bucket " << i << " após ordenação: ";
+        cout << "Bucket " << i << " apos ordenacao: ";
         displayList(nodeArray[i]);
     }
     
@@ -99,7 +99,7 @@ void explicaBucket()
             current = current->ptrNext;
         }
     }
-    cout << "Lista após concatenação: ";
+    cout << "Lista apos concatenacao: ";
     displayList(head);
     
     cout << "------------------------------------------------------------" << endl;

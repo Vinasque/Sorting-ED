@@ -9,7 +9,7 @@
 
 Aqui temos todas estruturas de ordenação estudadas na disciplina Estrutura de Dados, adaptadas para listas duplamente encadeadas.
 
-### Bucket Sort
+## Bucket Sort
 
 O arquivo `./Bucket/explicacao.cpp` contém uma explicação detalhada do funcionamento do algoritmo *Bucket Sort*. Para acessá-la, você deve rodar o arquivo de forma independente. Uma maneira de fazer isso é rodando os seguintes comandos no terminal:
 

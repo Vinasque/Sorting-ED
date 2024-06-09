@@ -29,14 +29,31 @@ int main()
     cout << treeHeight(root) << endl;
     
     Node<int>* rootBig = nullptr;
+    Node<int>* headBig = nullptr;
 
     for (int j = 1; j < 101; j++)
-    {
+    {  
+        auto timeStartCreateTree = high_resolution_clock::now();
         for (int i = 0; i < 10000; ++i) 
         {
             int iRandNum = rand() % 100 + 1; //Entre 1 e 100
             rootBig = insertNode(rootBig, iRandNum);
         }
+        auto timeStopCreateTree = high_resolution_clock::now();
+
+        auto timeDurationCreateTree = duration_cast<nanoseconds>(timeStopCreateTree - timeStartCreateTree);
+        cout << "(" << j << ") Create Tree time: " << timeDurationCreateTree.count() << " nanosegundos." << endl;
+
+        auto timeStartLinkedList = high_resolution_clock::now();
+        for (int i = 0; i < 10000; ++i) 
+        {
+            int iRandNum = rand() % 100 + 1; //Entre 1 e 100
+            insertEndLinkedList(&headBig, iRandNum);
+        }
+        auto timeStopLinkedList = high_resolution_clock::now();
+
+        auto timeDurationLinkedList = duration_cast<nanoseconds>(timeStopLinkedList - timeStartLinkedList);
+        cout << "(" << j << ") Linked List time: " << timeDurationLinkedList.count() << " nanosegundos." << endl;
 
         int iRandom = rand() % 100 + 1;
 
@@ -55,6 +72,7 @@ int main()
         cout << "(" << j << ") BFS Search: " << timeDurationBFS.count() << " nanosegundos." << endl;
 
         deleteTree(&rootBig);
+        deleteList(&headBig);
     }
 
     return 0;

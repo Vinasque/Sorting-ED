@@ -59,6 +59,29 @@ namespace functionsTree {
     }
 
     template <typename T>
+    void insertEndLinkedList(Node<T>** head, T iPayload) 
+    {
+        Node<T>* newNode = createNode(iPayload);
+
+        if (*head == nullptr) 
+        {
+            *head = newNode;
+        } 
+        else 
+        {
+            Node<T>* temp = *head;
+            
+            while (temp->ptrRight != nullptr) 
+            {
+                temp = temp->ptrRight;
+            }
+            
+            temp->ptrRight = newNode;
+            newNode->ptrLeft = temp;
+        }
+    }
+
+    template <typename T>
     Node<T>* insertNode(Node<T>* root, T iData) {
         if (root == nullptr) {
             return createNode(iData);
@@ -161,6 +184,25 @@ namespace functionsTree {
     }
 
     template <typename T>
+    void deleteList(Node<T>** head) {
+        if (*head == nullptr) {
+            cout << "Lista já está vazia." << endl;
+            return;
+        }
+
+        Node<T>* current = *head;
+        Node<T>* nextNode = nullptr;
+
+        while (current != nullptr) {
+            nextNode = current->ptrRight;
+            free(current);
+            current = nextNode;
+        }
+
+        *head = nullptr;
+    }
+
+    template <typename T>
     void deleteTreeRecursive(Node<T>* node)
     {
         if (node == nullptr) return;
@@ -255,12 +297,14 @@ namespace functionsTree {
     template Node<int>* createNode(int iData);
     template ListNode<int>* createListNode(Node<int>* node);
     template void insertEnd(ListNode<int>** head, Node<int>* node); 
+    template void insertEndLinkedList(Node<int>** head, int iPayload); 
     template Node<int>* insertNode(Node<int>* root, int iData);
     template Node<int>* searchNode(Node<int>* root, int iData);
     template Node<int>* searchNodeBFS(Node<int>* root, int iData);
     template Node<int>* deleteNode(Node<int>* root, int iData);
     template void deleteTree(Node<int>** root);
     template void deleteTreeRecursive(Node<int>* node);
+    template void deleteList(Node<int>** head);
     template void deleteListNode(ListNode<int>** head);
     template Node<int>* lesserLeaf(Node<int>* root);
     // template void bfsTraversal(Node<int>* root, int iData);

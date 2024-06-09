@@ -22,7 +22,9 @@ namespace functionsTree {
     template <typename T>
     ListNode<T>* createListNode(Node<T>* node);
     template <typename T>
-    void insertEnd(ListNode<T>** head, Node<T>* node); 
+    void insertEnd(ListNode<T>** head, Node<T>* node);
+    template <typename T>
+    void insertEndLinkedList(Node<T>** head, T iPayload); 
     template <typename T>
     Node<T>* insertNode(Node<T>* root, T iData);
     template <typename T>
@@ -35,6 +37,8 @@ namespace functionsTree {
     void deleteTree(Node<T>** root);
     template <typename T>
     void deleteTreeRecursive(Node<T>* node);
+    template <typename T>
+    void deleteList(Node<T>** head);
     template <typename T>
     void deleteListNode(ListNode<T>** head);;
     template <typename T>

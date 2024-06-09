@@ -35,27 +35,27 @@ int main()
         for (int i = 0; i < 10000; ++i) 
         {
             int iRandNum = rand() % 100 + 1; //Entre 1 e 100
-            root = insertNode(root, iRandNum);
+            rootBig = insertNode(rootBig, iRandNum);
         }
 
         int iRandom = rand() % 100 + 1;
 
         auto timeStartDFS = high_resolution_clock::now();
-        searchNode(root, iRandom);
+        searchNode(rootBig, iRandom);
         auto timeStopDFS = high_resolution_clock::now();
 
         auto timeDurationDFS = duration_cast<nanoseconds>(timeStopDFS - timeStartDFS);
         cout << "(" << j << ") DFS Search: " << timeDurationDFS.count() << " nanosegundos." << endl;
 
         auto timeStartBFS = high_resolution_clock::now();
-        searchNodeBFS(root, iRandom);
+        searchNodeBFS(rootBig, iRandom);
         auto timeStopBFS = high_resolution_clock::now();
 
         auto timeDurationBFS = duration_cast<nanoseconds>(timeStopBFS - timeStartBFS);
         cout << "(" << j << ") BFS Search: " << timeDurationBFS.count() << " nanosegundos." << endl;
 
-        deleteTree(&root);
-        root = nullptr;
+        deleteTree(&rootBig);
+        rootBig = nullptr;
     }
 
     return 0;

@@ -5,7 +5,7 @@ using namespace std;
 
 namespace functionsTree {
     template <typename T>
-    Node<T>* createNode(T iValue) {
+    Node<T>* createNode(T iData) {
         Node<T>* temp = (Node<T>*)malloc(sizeof(Node<T>));
         
         if (temp == nullptr) {
@@ -13,7 +13,7 @@ namespace functionsTree {
             exit(1);
         }
         
-        temp->iPayload = iValue;
+        temp->iPayload = iData;
         temp->ptrLeft = nullptr;
         temp->ptrRight = nullptr;
         
@@ -21,49 +21,181 @@ namespace functionsTree {
     }
 
     template <typename T>
-    Node<T>* insertNode(Node<T>* startingNode, T iData) {
-        if (startingNode == nullptr) {
-            return createNode(iData);
+    ListNode<T>* createListNode(Node<T>* node) {
+        ListNode<T>* temp = (ListNode<T>*)malloc(sizeof(ListNode<T>));
+        
+        if (temp == nullptr) {
+            cerr << "Erro em createNode: malloc" << endl;
+            exit(1);
         }
         
-        if (iData < startingNode->iPayload) {
-            startingNode->ptrLeft = insertNode(startingNode->ptrLeft, iData);
-        } else {
-            startingNode->ptrRight = insertNode(startingNode->ptrRight, iData);
-        }
+        temp->iPayload = node->iPayload;
+        temp->ptrNext = nullptr;
+        temp->ptrTreeEquivalent = node;
         
-        return startingNode;
+        return temp;
     }
 
     template <typename T>
-    void bfsTraversal(Node<T>* ptrStartingNode) {
-        if (ptrStartingNode == nullptr) return;
-        
-        // Parte 1 do trabalho: Alterar para lista encadeada
-        Node<T>* nodeQueue[100];
-        int iQueueFront = 0;
-        int iQueueRear = 0;
-        
-        nodeQueue[iQueueRear] = ptrStartingNode;
-        iQueueRear++;
-        
-        while (iQueueFront < iQueueRear) {
-            Node<T>* currentNode = nodeQueue[iQueueFront];
-            iQueueFront++;
+    void insertEnd(ListNode<T>** head, Node<T>* node) 
+    {
+        ListNode<T>* newNode = createListNode(node);
+
+        if (*head == nullptr) 
+        {
+            *head = newNode;
+        } 
+        else 
+        {
+            ListNode<T>* temp = *head;
             
-            cout << currentNode->iPayload << " ";
-            
-            if (currentNode->ptrLeft != nullptr) {
-                nodeQueue[iQueueRear] = currentNode->ptrLeft;
-                iQueueRear++;
+            while (temp->ptrNext != nullptr) 
+            {
+                temp = temp->ptrNext;
             }
-            
-            if (currentNode->ptrRight != nullptr) {
-                nodeQueue[iQueueRear] = currentNode->ptrRight;
-                iQueueRear++;
-            }
+
+            temp->ptrNext = newNode;
         }
     }
+
+    template <typename T>
+    Node<T>* insertNode(Node<T>* root, T iData) {
+        if (root == nullptr) {
+            return createNode(iData);
+        }
+        
+        if (iData < root->iPayload) {
+            root->ptrLeft = insertNode(root->ptrLeft, iData);
+        } else {
+            root->ptrRight = insertNode(root->ptrRight, iData);
+        }
+        
+        return root;
+    }
+
+    template <typename T>
+    Node<T>* searchNode(Node<T>* root, T iData)
+    {
+        if (root == nullptr) return nullptr;
+        else if (iData == root->iPayload) return root;
+        else if (iData < root->iPayload) return searchNode(root->ptrLeft, iData);
+        else return searchNode(root->ptrRight, iData);
+    }
+
+    template <typename T>
+    Node<T>* searchNodeBFS(Node<T>* root, T iData) {
+        if (root == nullptr) return nullptr;
+
+        ListNode<T>* head = nullptr;
+        insertEnd(&head, root);
+        
+        ListNode<T>* QueueFront = head;
+        ListNode<T>* QueueRear = head;
+        int iQueueFront = 0;
+
+        while (QueueFront != nullptr) {
+            Node<T>* currentNode = QueueFront->ptrTreeEquivalent;
+            
+            if (currentNode->iPayload == iData) {
+                return currentNode;
+            }
+
+            if (currentNode->ptrLeft != nullptr) {
+                insertEnd(&head, currentNode->ptrLeft);
+            }
+
+            if (currentNode->ptrRight != nullptr) {
+                insertEnd(&head, currentNode->ptrRight);
+            }
+
+            QueueFront = QueueFront->ptrNext;
+        }
+
+        return nullptr;
+    }
+
+    template <typename T>
+    Node<T>* deleteNode(Node<T>* root, T iData)
+    {
+        if (root == nullptr) return nullptr;
+        
+        if (iData < root->iPayload) root->ptrLeft = deleteNode(root->ptrLeft, iData);
+        else if (iData > root->iPayload) root->ptrRight = deleteNode(root->ptrRight, iData);
+        else
+        {
+            Node<T>* ptrTemp = nullptr;
+            
+            if (root != nullptr)
+            {
+                ptrTemp = root->ptrRight;
+                free(root);
+                
+                return ptrTemp;
+            }
+            else if (root->ptrRight == nullptr)
+            {
+                ptrTemp = root->ptrLeft;
+                free(root);
+                
+                return ptrTemp;
+            }
+        }
+        
+        Node<T>* ptrTemp = lesserLeaf(root->ptrRight);
+        
+        root->iPayload = ptrTemp->iPayload;
+        
+        root->ptrRight = deleteNode(root->ptrRight, ptrTemp->iPayload);
+        
+        return root;
+    }
+
+    template <typename T>
+    Node<T>* lesserLeaf(Node<T>* root)
+    {
+        Node<T>* ptrCurrent = root;
+        
+        while (ptrCurrent && ptrCurrent->ptrLeft != nullptr) ptrCurrent = ptrCurrent->ptrLeft;
+        
+        return ptrCurrent;
+    }
+
+
+    // template <typename T>
+    // void bfsTraversal(Node<T>* root, T iData) {
+    //     if (root == nullptr) return nullptr;
+
+    //     int iQueueFront = 0;
+    //     int iQueueSize = 0;
+
+    //     Node<T>* head = nullptr;
+    //     insertEnd(&head, root->iPayload);
+    //     iQueueSize++;
+        
+    //     Node<T>* QueueFront = head;
+
+    //     while (iQueueFront < iQueueSize) {
+    //         Node<T>* currentNode = QueueFront;
+    //         QueueFront = QueueFront->ptrRight;
+    //         iQueueFront++;
+
+    //         if (currentNode->iPayload == iData) {
+    //             return currentNode;
+    //         }
+
+    //         if (currentNode->ptrLeft != nullptr) {
+    //             insertEnd(&head, currentNode->ptrLeft->iPayload);
+    //             iQueueSize++;
+    //         }
+
+    //         if (currentNode->ptrRight != nullptr) {
+    //             insertEnd(&head, currentNode->ptrRight->iPayload);
+    //             iQueueSize++;
+    //         }
+    //     }
+
+    //     return nullptr;
+    // }
 
     // Parte 2 do trabalho: Elaborar busca utilizando BFS (já fizemos o DFS)
     // Parte 3 do trabalho: Monitorar o desempenho de busca em árvore utiliando DFS e BFS
@@ -71,18 +203,24 @@ namespace functionsTree {
     // Parte 5 do trabalho: Monitorar o desempenho de criação de árvores
 
     template <typename T>
-    int treeHeight(Node<T>* ptrStartingNode) {
-        if (ptrStartingNode == nullptr) return 0;
+    int treeHeight(Node<T>* root) {
+        if (root == nullptr) return 0;
         else {
-            int iLeftHeight = treeHeight(ptrStartingNode->ptrLeft);
-            int iRightHeight = treeHeight(ptrStartingNode->ptrRight);
+            int iLeftHeight = treeHeight(root->ptrLeft);
+            int iRightHeight = treeHeight(root->ptrRight);
             
             return max(iLeftHeight, iRightHeight) + 1;
         }
     }
 
-    template Node<int>* createNode(int iValue);
-    template Node<int>* insertNode(Node<int>* root, int iValue);
-    template void bfsTraversal(Node<int>* root);
+    template Node<int>* createNode(int iData);
+    template ListNode<int>* createListNode(Node<int>* node);
+    template void insertEnd(ListNode<int>** head, Node<int>* node); 
+    template Node<int>* insertNode(Node<int>* root, int iData);
+    template Node<int>* searchNode(Node<int>* root, int iData);
+    template Node<int>* searchNodeBFS(Node<int>* root, int iData);
+    template Node<int>* deleteNode(Node<int>* root, int iData);
+    template Node<int>* lesserLeaf(Node<int>* root);
+    // template void bfsTraversal(Node<int>* root, int iData);
     template int treeHeight(Node<int>* root);
 }

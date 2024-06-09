@@ -8,13 +8,33 @@ struct Node
     Node* ptrRight;
 };
 
+template <typename T>
+struct ListNode
+{
+    Node<T>* ptrTreeEquivalent;
+    ListNode<T>* ptrNext;
+    T iPayload;
+};
+
 namespace functionsTree {
     template <typename T>
-    Node<T>* createNode(T value);
+    Node<T>* createNode(T iData);
     template <typename T>
-    Node<T>* insertNode(Node<T>* root, T value);
+    ListNode<T>* createListNode(Node<T>* node);
     template <typename T>
-    void bfsTraversal(Node<T>* root);
+    void insertEnd(ListNode<T>** head, Node<T>* node); 
+    template <typename T>
+    Node<T>* insertNode(Node<T>* root, T iData);
+    template <typename T>
+    Node<T>* searchNode(Node<T>* root, T iData);
+    template <typename T>
+    Node<T>* searchNodeBFS(Node<T>* root, T iData);
+    template <typename T>
+    Node<T>* deleteNode(Node<T>* root, T iData);
+    template <typename T>
+    Node<T>* lesserLeaf(Node<T>* root);
+    // template <typename T>
+    // void bfsTraversal(Node<T>* root, T iData);
     template <typename T>
     int treeHeight(Node<T>* root);
 }

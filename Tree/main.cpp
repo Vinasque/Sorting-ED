@@ -16,8 +16,10 @@ int main()
     root = insertNode(root, 51);
     root = insertNode(root, 171);
     
-    cout << "BFS Traversal:";
-    bfsTraversal(root);
+    cout << "BFS Traversal:" << endl;
+    Node<int>* foundNode = nullptr;
+    foundNode = searchNodeBFS(root, 10);
+    cout << "Value Found: " <<  foundNode->iPayload << endl;
     cout << endl;
     
     cout << "Tree height:";

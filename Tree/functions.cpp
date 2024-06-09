@@ -153,6 +153,18 @@ namespace functionsTree {
     }
 
     template <typename T>
+    void deleteTree(Node<T>* root)
+    {
+        if (root == nullptr) return;
+        
+        deleteTree(root->ptrLeft);
+        deleteTree(root->ptrRight);
+
+        free(root);
+        root = nullptr;
+    }
+
+    template <typename T>
     void deleteListNode(ListNode<T>** head) {
         if (*head == nullptr) {
             cout << "Lista já está vazia." << endl;
@@ -218,7 +230,6 @@ namespace functionsTree {
     //     return nullptr;
     // }
 
-    // Parte 2 do trabalho: Elaborar busca utilizando BFS (já fizemos o DFS)
     // Parte 3 do trabalho: Monitorar o desempenho de busca em árvore utiliando DFS e BFS
     // Parte 4 do trabalho: Monitorar o desempenho de criação de listas
     // Parte 5 do trabalho: Monitorar o desempenho de criação de árvores
@@ -241,6 +252,7 @@ namespace functionsTree {
     template Node<int>* searchNode(Node<int>* root, int iData);
     template Node<int>* searchNodeBFS(Node<int>* root, int iData);
     template Node<int>* deleteNode(Node<int>* root, int iData);
+    template void deleteTree(Node<int>* root);
     template void deleteListNode(ListNode<int>** head);
     template Node<int>* lesserLeaf(Node<int>* root);
     // template void bfsTraversal(Node<int>* root, int iData);

@@ -1,8 +1,11 @@
 #include <iostream>
+#include <chrono>
+#include <cstdlib>
 #include "functions.h"
 
 using namespace std;
 using namespace functionsTree;
+using namespace std::chrono;
 
 int main()
 {
@@ -25,5 +28,34 @@ int main()
     cout << "Tree height:";
     cout << treeHeight(root) << endl;
     
+    Node<int>* rootBig = nullptr;
+
+    for (int j = 1; j < 101; j++)
+    {
+        for (int i = 0; i < 10000; ++i) 
+        {
+            int iRandNum = rand() % 100 + 1; //Entre 1 e 100
+            root = insertNode(root, iRandNum);
+        }
+
+        insertNode(root, 101);
+
+        auto timeStartDFS = high_resolution_clock::now();
+        searchNode(root, 3);
+        auto timeStopDFS = high_resolution_clock::now();
+
+        auto timeDurationDFS = duration_cast<nanoseconds>(timeStopDFS - timeStartDFS);
+        cout << "(" << j << ") DFS Search: " << timeDurationDFS.count() << " nanosegundos." << endl;
+
+        auto timeStartBFS = high_resolution_clock::now();
+        searchNodeBFS(root, 3);
+        auto timeStopBFS = high_resolution_clock::now();
+
+        auto timeDurationBFS = duration_cast<nanoseconds>(timeStopBFS - timeStartBFS);
+        cout << "(" << j << ") BFS Search: " << timeDurationBFS.count() << " nanosegundos." << endl;
+
+        deleteNode(root, root->iPayload);
+    }
+
     return 0;
 }

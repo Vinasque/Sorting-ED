@@ -111,6 +111,8 @@ namespace functionsTree {
             QueueFront = QueueFront->ptrNext;
         }
 
+        deleteListNode(&head);
+
         return nullptr;
     }
 
@@ -148,6 +150,25 @@ namespace functionsTree {
         root->ptrRight = deleteNode(root->ptrRight, ptrTemp->iPayload);
         
         return root;
+    }
+
+    template <typename T>
+    void deleteListNode(ListNode<T>** head) {
+        if (*head == nullptr) {
+            cout << "Lista já está vazia." << endl;
+            return;
+        }
+
+        ListNode<T>* current = *head;
+        ListNode<T>* nextNode = nullptr;
+
+        while (current != nullptr) {
+            nextNode = current->ptrNext;
+            free(current);
+            current = nextNode;
+        }
+
+        *head = nullptr;
     }
 
     template <typename T>
@@ -220,6 +241,7 @@ namespace functionsTree {
     template Node<int>* searchNode(Node<int>* root, int iData);
     template Node<int>* searchNodeBFS(Node<int>* root, int iData);
     template Node<int>* deleteNode(Node<int>* root, int iData);
+    template void deleteListNode(ListNode<int>** head);
     template Node<int>* lesserLeaf(Node<int>* root);
     // template void bfsTraversal(Node<int>* root, int iData);
     template int treeHeight(Node<int>* root);

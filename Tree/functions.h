@@ -32,7 +32,9 @@ namespace functionsTree {
     template <typename T>
     Node<T>* deleteNode(Node<T>* root, T iData);
     template <typename T>
-    void deleteTree(Node<T>* root);
+    void deleteTree(Node<T>** root);
+    template <typename T>
+    void deleteTreeRecursive(Node<T>* node);
     template <typename T>
     void deleteListNode(ListNode<T>** head);;
     template <typename T>

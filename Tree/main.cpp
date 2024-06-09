@@ -38,23 +38,24 @@ int main()
             root = insertNode(root, iRandNum);
         }
 
-        insertNode(root, 101);
+        int iRandom = rand() % 100 + 1;
 
         auto timeStartDFS = high_resolution_clock::now();
-        searchNode(root, 3);
+        searchNode(root, iRandom);
         auto timeStopDFS = high_resolution_clock::now();
 
         auto timeDurationDFS = duration_cast<nanoseconds>(timeStopDFS - timeStartDFS);
         cout << "(" << j << ") DFS Search: " << timeDurationDFS.count() << " nanosegundos." << endl;
 
         auto timeStartBFS = high_resolution_clock::now();
-        searchNodeBFS(root, 3);
+        searchNodeBFS(root, iRandom);
         auto timeStopBFS = high_resolution_clock::now();
 
         auto timeDurationBFS = duration_cast<nanoseconds>(timeStopBFS - timeStartBFS);
         cout << "(" << j << ") BFS Search: " << timeDurationBFS.count() << " nanosegundos." << endl;
 
-        deleteNode(root, root->iPayload);
+        deleteTree(&root);
+        root = nullptr;
     }
 
     return 0;

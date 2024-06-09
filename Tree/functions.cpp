@@ -153,15 +153,23 @@ namespace functionsTree {
     }
 
     template <typename T>
-    void deleteTree(Node<T>* root)
+    void deleteTree(Node<T>** root)
     {
-        if (root == nullptr) return;
-        
-        deleteTree(root->ptrLeft);
-        deleteTree(root->ptrRight);
+        deleteTreeRecursive(*root);
 
-        free(root);
         root = nullptr;
+    }
+
+    template <typename T>
+    void deleteTreeRecursive(Node<T>* node)
+    {
+        if (node == nullptr) return;
+        
+        deleteTreeRecursive(node->ptrLeft);
+        deleteTreeRecursive(node->ptrRight);
+
+        free(node);
+        node = nullptr;
     }
 
     template <typename T>
@@ -252,7 +260,8 @@ namespace functionsTree {
     template Node<int>* searchNode(Node<int>* root, int iData);
     template Node<int>* searchNodeBFS(Node<int>* root, int iData);
     template Node<int>* deleteNode(Node<int>* root, int iData);
-    template void deleteTree(Node<int>* root);
+    template void deleteTree(Node<int>** root);
+    template void deleteTreeRecursive(Node<int>* node);
     template void deleteListNode(ListNode<int>** head);
     template Node<int>* lesserLeaf(Node<int>* root);
     // template void bfsTraversal(Node<int>* root, int iData);

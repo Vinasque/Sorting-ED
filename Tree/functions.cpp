@@ -157,7 +157,7 @@ namespace functionsTree {
     {
         deleteTreeRecursive(*root);
 
-        root = nullptr;
+        *root = nullptr;
     }
 
     template <typename T>
@@ -169,7 +169,6 @@ namespace functionsTree {
         deleteTreeRecursive(node->ptrRight);
 
         free(node);
-        node = nullptr;
     }
 
     template <typename T>

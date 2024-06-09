@@ -55,7 +55,6 @@ int main()
         cout << "(" << j << ") BFS Search: " << timeDurationBFS.count() << " nanosegundos." << endl;
 
         deleteTree(&rootBig);
-        rootBig = nullptr;
     }
 
     return 0;
